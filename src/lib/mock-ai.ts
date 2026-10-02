@@ -5,7 +5,8 @@ export type EmailTone = "Formal" | "Friendly" | "Persuasive";
 
 const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-const pick = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
+const pick = <T>(arr: readonly T[]): T =>
+  arr[Math.floor(Math.random() * arr.length)] as T;
 
 export async function generateEmail(
   purpose: string,
