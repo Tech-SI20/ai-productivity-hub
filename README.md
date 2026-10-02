@@ -1,82 +1,138 @@
-# AI Productivity Hub
+# AI Workplace Productivity Assistant
 
-Build a modern, responsive **frontend-only SaaS web application** called **AI Workplace Productivity Assistant** for professionals.
+**Author:** Thobeka S Ngcobo
 
-### Core Features
+## 📌 Project Overview
 
-Create 3 main AI tools:
+**AI Workplace Productivity Assistant** is a modern, responsive web application designed to help professionals automate common workplace tasks using AI.
 
-**1. Smart Email Generator**
+The application provides a clean SaaS-style dashboard where users can generate professional emails, perform AI-assisted research, and interact with an AI workplace chatbot.
+
+The project is designed as a **frontend MVP**, allowing users to access the application without signing in or registering.
+
+---
+
+## ✨ Features Implemented
+
+### 📧 Smart Email Generator
 
 * Generate professional workplace emails
-* Inputs for purpose/context and recipient
-* Tone selector: **Formal, Friendly, Persuasive**
-* Display AI-generated email in an editable output area
-* Include Copy and Regenerate actions
+* Support for multiple tones:
 
-**2. AI Research Assistant**
+  * Formal
+  * Friendly
+  * Persuasive
+* Structured input and output sections
+* Editable AI-generated responses
+* Copy generated email content
 
-* Allow users to enter a topic, question, or article text
-* Generate concise summaries, key insights, and recommendations
-* Display results in a clean, editable output section
-* Include Copy and Regenerate actions
+### 🔎 AI Research Assistant
 
-**3. AI Chatbot**
+* Enter a research topic or question
+* Summarize topics or articles
+* Generate key insights
+* Provide recommendations
+* Display AI-generated results in an editable format
 
-* Interactive workplace AI assistant
-* Chat-style interface for user prompts and AI responses
-* Clear user/AI message distinction
-* Include loading and empty states
+### 💬 AI Chatbot Interface
 
-### UI/UX
+* Interactive AI workplace assistant
+* Conversational chat interface
+* User prompt input
+* AI-generated responses
+* Clear distinction between user and AI messages
 
-* Modern SaaS dashboard layout
-* Left sidebar navigation with icons
-* Clean **dark grey, charcoal, and white** colour palette
-* Professional typography and spacing
-* Responsive for desktop and mobile
-* Dashboard home screen with welcome section and feature cards
-* Consistent buttons, cards, inputs, and output components
-* Subtle modern animations and hover states
+### 🎨 User Interface
 
-### AI Experience
+* Modern SaaS dashboard
+* Sidebar navigation
+* Responsive desktop and mobile design
+* Dark grey and white colour scheme
+* Professional UI/UX
+* Clean cards, forms, buttons, and output sections
+* Responsible AI disclaimer
 
-* Use structured prompts and clear input fields
-* Show generated responses in editable sections
-* Use realistic mock AI responses/frontend functionality if a real AI API is not available
-* Keep the architecture easy to connect to a real AI API later
+---
 
-### Access & Scope
+## 🛠️ Technologies and Tools Used
 
-* **No backend**
-* **No database**
-* **No sign-in or registration**
-* Users should access the application immediately without authentication
-* Focus on a polished, functional frontend MVP
+### Frontend
 
-### Responsible AI
+* **React** — UI development
+* **TypeScript** — Type-safe development
+* **Tailwind CSS** — Styling and responsive design
+* **HTML5** — Application structure
+* **CSS3** — Custom styling
 
-Add a visible **Responsible AI disclaimer** stating that AI-generated content may contain errors and should be reviewed and verified by the user before being relied upon or shared.
+### Development Tools
 
-Prioritize a **clean, professional, modern SaaS experience* over unnecessary features. Build only what is specified above.
+* **Git** — Version control
+* **GitHub** — Source code repository
+* **Lovable / AI Coding Agent** — Application development and prototyping
+* **npm** — Package management
 
-This project was built with [Lovable](https://lovable.dev).
+### AI
 
-## Build with Lovable
+The application is structured to support AI-generated responses. Mock/demo responses can be used during frontend development, with real AI API integration available as a future enhancement.
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/2ebeea9f-e6fd-46f5-921c-1f76f6181f76).
+---
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+## 🚀 Setup Instructions
 
-## Development
+### 1. Clone the Repository
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+```bash
+git clone https://github.com/YOUR-USERNAME/ai-workplace-productivity-assistant.git
+```
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+### 2. Navigate to the Project
+
+```bash
+cd ai-workplace-productivity-assistant
+```
+
+### 3. Install Dependencies
+
+```bash
+npm install
+```
+
+### 4. Start the Development Server
+
+```bash
 npm run dev
 ```
+
+### 5. Open the Application
+
+Open the local development URL displayed in your terminal, typically:
+
+```text
+http://localhost:5173
+```
+
+---
+
+## 🔐 Authentication
+
+Authentication and user registration are **not included** in the current version.
+
+Users can access the application immediately without creating an account or signing in.
+
+---
+
+## ⚠️ Responsible AI
+
+AI-generated content may contain inaccurate or incomplete information. Users should review and verify AI-generated responses before relying on or sharing them.
+
+---
+
+## 👩🏽‍💻 Author
+
+**Thobeka S Ngcobo**
+
+---
+
+## 📄 License
+
+This project is available under the **MIT License**.
