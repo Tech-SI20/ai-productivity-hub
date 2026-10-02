@@ -16,7 +16,7 @@ function friendlyError(err: unknown): string {
 
 /** Streams a Responses call through Lovable AI Gateway and returns the final text. */
 export async function runAI(system: string, messages: ModelMessage[]): Promise<string> {
-  const apiKey = process.env.LOVABLE_API_KEY;
+  const apiKey = process.env['LOVABLE_API_KEY'];
   if (!apiKey) throw new Error("The AI service is not configured.");
   const provider = createOpenAI({
     baseURL: BASE_URL,

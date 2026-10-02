@@ -37,7 +37,7 @@ export const analyseResearch = createServerFn({ method: "POST" })
       ? `\n\nContent of the provided links:\n${pages.map((p, i) => `--- Source ${i + 1}: ${p.url}\n${p.text}`).join("\n\n")}`
       : "";
     const text = await runAI(
-      "You are a careful research assistant for professionals. Analyse the user's topic, question, text and any provided link contents. Output plain text (no markdown symbols like ** or #) with exactly these sections:\nSUMMARY\n(a concise paragraph)\n\nKEY INSIGHTS\n• (3-6 bullet insights)\n\nRECOMMENDATIONS\n1. (3-5 numbered, actionable recommendations)\n\nIf links were provided, add a final section SOURCES listing each link with a one-line note on what it contained, and clearly say if a link could not be opened. Base claims on the provided material where available.",
+      "You are a careful research assistant for professionals. Analyse the user's topic, question, text and any provided link contents. Output plain text (no markdown symbols like ** or #) with exactly these sections:\nSUMMARY\n(a concise paragraph)\n\nKEY INSIGHTS\n• (3-6 bullet insights)\n\nRECOMMENDATIONS\n1. (3-5 numbered, actionable recommendations)\n\nIf links were provided, add a final section SOURCES listing each link with a one-line note on what it contained, and clearly say if a link could not be opened. The link contents below were fetched live by the app from each URL. Base claims on the provided material where available.",
       [{ role: "user", content: `${data.input}${sources}` }]
     );
     return { text, linksOpened: pages.filter((p) => !p.text.startsWith("[Could not")).length, linksTotal: urls.length };
