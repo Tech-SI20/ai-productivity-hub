@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { MessageSquare, Send, Sparkles, User } from "lucide-react";
-import { generateChatReply } from "@/lib/mock-ai";
+import { useServerFn } from "@tanstack/react-start";
+import { chatReply } from "@/lib/ai.functions";
 import { ResponsibleAiNotice } from "@/components/ui-kit";
 import { cn } from "@/lib/utils";
 
@@ -35,15 +36,26 @@ function ChatPage() {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
+  const reply = useServerFn(chatReply);
   const send = async (text: string) => {
     const t = text.trim();
     if (!t || loading) return;
-    setMessages((m) => [...m, { role: "user", text: t }]);
+    const next: Msg[] = [...messages, { role: "user", text: t }];
+    setMessages(next);
     setInput("");
     setLoading(true);
-    const reply = await generateChatReply(t);
-    setMessages((m) => [...m, { role: "ai", text: reply }]);
-    setLoading(false);
+    try {
+      const r = await reply({
+        data: {
+          messages: next.slice(-30).map((m) => ({ role: m.role === "ai" ? "assistant" : "user", content: m.text })),
+        },
+      });
+      setMessages((m) => [...m, { role: "ai", text: r.text }]);
+    } catch (e) {
+      setMessages((m) => [...m, { role: "ai", text: `⚠ ${e instanceof Error ? e.message : "Something went wrong. Please try again."}` }]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { FileSearch } from "lucide-react";
-import { generateResearch, type ResearchResult } from "@/lib/mock-ai";
+import { useServerFn } from "@tanstack/react-start";
+import { analyseResearch } from "@/lib/ai.functions";
 import { Card, FieldLabel, GenerateButton, inputClass } from "@/components/ui-kit";
 import { OutputPanel, PageHeader } from "./email";
 import { cn } from "@/lib/utils";
@@ -18,17 +19,14 @@ export const Route = createFileRoute("/research")({
   component: ResearchPage,
 });
 
-const format = (r: ResearchResult) =>
-  `SUMMARY\n${r.summary}\n\nKEY INSIGHTS\n${r.insights.map((i) => `• ${i}`).join("\n")}\n\nRECOMMENDATIONS\n${r.recommendations
-    .map((x, i) => `${i + 1}. ${x}`)
-    .join("\n")}`;
-
 function ResearchPage() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const analyse = useServerFn(analyseResearch);
+  const [note, setNote] = useState("");
   const run = async () => {
     if (!input.trim()) {
       setError("Please enter a topic, question, or article text.");
@@ -36,8 +34,16 @@ function ResearchPage() {
     }
     setError("");
     setLoading(true);
-    setOutput(format(await generateResearch(input)));
-    setLoading(false);
+    setNote("");
+    try {
+      const r = await analyse({ data: { input } });
+      setOutput(r.text);
+      if (r.linksTotal) setNote(`Opened ${r.linksOpened} of ${r.linksTotal} link${r.linksTotal > 1 ? "s" : ""}.`);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -51,10 +57,12 @@ function ResearchPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               rows={12}
-              placeholder="e.g. How can hybrid teams improve collaboration? — or paste an article here"
+              placeholder="e.g. How can hybrid teams improve collaboration? — or paste an article or links here"
               className={cn(inputClass, "resize-none")}
             />
             {error && <p className="mt-1.5 text-xs text-destructive">{error}</p>}
+            {note && <p className="mt-1.5 text-xs text-muted-foreground">{note}</p>}
+            <p className="mt-1.5 text-xs text-muted-foreground">Include links (https://…) and the assistant will open and read them.</p>
           </div>
           <GenerateButton onClick={run} loading={loading} label="Analyse" />
         </Card>
