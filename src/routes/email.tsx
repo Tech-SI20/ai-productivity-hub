@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Mail } from "lucide-react";
-import { generateEmail, type EmailTone } from "@/lib/mock-ai";
+import { useServerFn } from "@tanstack/react-start";
+import { draftEmail } from "@/lib/ai.functions";
+
+type EmailTone = "Formal" | "Friendly" | "Persuasive";
 import {
   Card,
   CopyButton,
@@ -35,6 +38,7 @@ function EmailPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const draft = useServerFn(draftEmail);
   const run = async () => {
     if (!purpose.trim()) {
       setError("Please describe the purpose of your email.");
@@ -42,8 +46,14 @@ function EmailPage() {
     }
     setError("");
     setLoading(true);
-    setOutput(await generateEmail(purpose, recipient, tone));
-    setLoading(false);
+    try {
+      const r = await draft({ data: { purpose, recipient, tone } });
+      setOutput(r.text);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
